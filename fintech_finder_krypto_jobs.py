@@ -30,7 +30,7 @@ from dataclasses import dataclass
 from typing import Any, List
 from web3 import Web3
 
-w3 = Web3(Web3.HTTPProvider("HTTP://127.0.0.1:7545"))
+w3 = Web3(Web3.HTTPProvider("HTTP://127.0.0.1:8545")) # Local Ganache connection
 ################################################################################
 # Step 1:
 # Import Ethereum Transaction Functions into the KryptoJobs2Go Application
@@ -46,8 +46,8 @@ w3 = Web3(Web3.HTTPProvider("HTTP://127.0.0.1:7545"))
 
 # 1. Review the code contained in the `crypto_wallet.py` script file. Note that
 # the Ethereum transaction functions that you have built throughout this
-# module-including `wallet`, `wallet.derive_acount`, `get_balance`, `fromWei`,
-# `estimateGas`, `sendRawTransaction`, and others&mdash;have now been
+# module, including `wallet`, `wallet.derive_acount`, `get_balance`, `fromWei`,
+# `estimateGas`, `sendRawTransaction`, and others have now been
 # incorporated into Python functions that allow you to automate the process of
 # accessing them.
 
@@ -62,13 +62,12 @@ w3 = Web3(Web3.HTTPProvider("HTTP://127.0.0.1:7545"))
 # 4. Within the Streamlit sidebar section of code, create a variable named
 # `account`. Set this variable equal to a call on the `generate_account`
 # function. This function will create the KryptoJobs2Go customer’s (in this
-# case, your) HD wallet and Ethereum account.
+# case, yours as testing proxy) HD wallet and Ethereum account.
 
 # 5. Within this same section of the `krypto_jobs.py` file, define a
 # new `st.sidebar.write` function that will display the balance of the
 # customer’s account. Inside this function, call the `get_balance` function
 # and pass it your Ethereum `account.address`.
-
 
 ################################################################################
 # Step 1 - Part 3:
@@ -77,15 +76,14 @@ w3 = Web3(Web3.HTTPProvider("HTTP://127.0.0.1:7545"))
 # * `get_balance`
 # * `send_transaction`
 
-# @TODO:
 # From `crypto_wallet.py import the functions generate_account, get_balance,
 #  and send_transaction
-# YOUR CODE HERE
+from crypto_wallet import generate_account, get_balance, send_transaction
 
 ################################################################################
-# KryptoJobs2Go Candidate Information
+# KryptoJobs2Go Candidates' Information
 
-# Database of KryptoJobs2Go candidates including their name, digital address, rating and hourly cost per Ether.
+# Dictionary object database of KryptoJobs2Go candidates including their name, digital address, rating and hourly cost per Ether.
 # A single Ether is currently valued at $1,500
 candidate_database = {
     "Lane": [
@@ -119,8 +117,9 @@ candidate_database = {
 }
 
 # A list of the KryptoJobs2Go candidates first names
-people = ["Lane", "Ash", "Jo", "Kendall"]
-
+# people = ["Lane", "Ash", "Jo", "Kendall"]
+people = list(candidate_database.keys()) # Replace manual list with automated
+#print(people)
 
 def get_people():
     """Display the database of KryptoJobs2Go candidate information."""
@@ -133,7 +132,6 @@ def get_people():
         st.write("KryptoJobs2Go Rating: ", db_list[number][2])
         st.write("Hourly Rate per Ether: ", db_list[number][3], "eth")
         st.text(" \n")
-
 
 ################################################################################
 # Streamlit Code
@@ -154,10 +152,9 @@ st.sidebar.markdown("## Client Account Address and Ethernet Balance in Ether")
 # `generate_account` function. This function will create the KryptoJobs2Go
 # customer’s (in this case, your) HD wallet and Ethereum account.
 
-# @TODO:
-#  Call the `generate_account` function and save it as the variable `account`
-# YOUR CODE HERE
-
+#  Call the `generate_account` function and save it as the variable `account`. A wallet can contain multiple accounts via derive_account and privateKeyToAccount.
+account = generate_account() # Generates wallet and account object based on mnemonic seed phrase in local environment file (.env) variable 'MNEMONIC'
+#print(account)
 ##########################################
 
 # Write the client's Ethereum account address to the sidebar
@@ -167,12 +164,13 @@ st.sidebar.write(account.address)
 # Step 1 - Part 5:
 # Define a new `st.sidebar.write` function that will display the balance of the
 # customer’s account. Inside this function, call the `get_balance` function and
-#  pass it your Ethereum `account.address`.
+# pass it your Ethereum `account.address`.
 
 # @TODO
 # Call `get_balance` function and pass it your account address
 # Write the returned ether balance to the sidebar
-# YOUR CODE HERE
+balance_ether = get_balance(w3 = w3, address = account.address)
+st.sidebar.write(balance_ether)
 
 ##########################################
 

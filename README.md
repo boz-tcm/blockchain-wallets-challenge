@@ -48,9 +48,12 @@
         - [GitHub Repository](https://github.com/boz-tcm/blockchain-challenge.git)
 - Python Standard Library Version 3.10.13
 - Python Libraries and Modules:
-    - streamlit
     - dataclasses and dataclass
+    - streamlit
     - typing and Any, List
+    - web3 and Web3
+   
+    
     - datetime
     - pandas
     - hashlib
