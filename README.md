@@ -48,16 +48,11 @@
         - [GitHub Repository](https://github.com/boz-tcm/blockchain-challenge.git)
 - Python Standard Library Version 3.10.13
 - Python Libraries and Modules:
+    - crypto_wallet and generate_account, get_balance, send_transaction
     - dataclasses and dataclass
     - streamlit
     - typing and Any, List
-    - web3 and Web3
-   
-    
-    - datetime
-    - pandas
-    - hashlib
-    - decorators @dataclass and @st.cache
+    - web3 Version 5.17 and Web3 
 
 - Python File(s):
     - [pychain.py](pychain.py)

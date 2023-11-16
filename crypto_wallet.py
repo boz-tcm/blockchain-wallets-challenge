@@ -64,12 +64,14 @@ def send_transaction(w3, account, to, wage):
     )
 
     # Construct a raw transaction
+    # Note: Modified "gasPrice" from 0 to 2e9, which observed here https://web3py.readthedocs.io/en/latest/transactions.html as "maxFeePerGas" key value.
+    # Note: Starter Code file and all 19.3 class file solutions showed "gasPrice" as 0, which prohibited execution in Streamlit, whereas 2e9 allowed execution.
     raw_tx = {
         "to": to,
         "from": account.address,
         "value": value,
         "gas": gasEstimate,
-        "gasPrice": 0,
+        "gasPrice": 2000000000,
         "nonce": w3.eth.getTransactionCount(account.address),
     }
 

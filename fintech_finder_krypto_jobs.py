@@ -36,7 +36,7 @@ w3 = Web3(Web3.HTTPProvider("HTTP://127.0.0.1:8545")) # Local Ganache connection
 # Import Ethereum Transaction Functions into the KryptoJobs2Go Application
 
 # In this section, you'll import several functions from the `crypto_wallet.py`
-# script into the file `krypto_jobs.py`, which contains code for Fintech
+# script into the file `fintech_finder_krypto_jobs.py`, which contains code for Fintech
 # Finder’s customer interface, in order to add wallet operations to the
 # application. For this section, you will assume the perspective of a Fintech
 # Finder customer (i.e., you’ll provide your Ethereum wallet and account
@@ -64,7 +64,7 @@ w3 = Web3(Web3.HTTPProvider("HTTP://127.0.0.1:8545")) # Local Ganache connection
 # function. This function will create the KryptoJobs2Go customer’s (in this
 # case, yours as testing proxy) HD wallet and Ethereum account.
 
-# 5. Within this same section of the `krypto_jobs.py` file, define a
+# 5. Within this same section of the `fintech_finder_krypto_jobs.py` file, define a
 # new `st.sidebar.write` function that will display the balance of the
 # customer’s account. Inside this function, call the `get_balance` function
 # and pass it your Ethereum `account.address`.
@@ -166,7 +166,6 @@ st.sidebar.write(account.address)
 # customer’s account. Inside this function, call the `get_balance` function and
 # pass it your Ethereum `account.address`.
 
-# @TODO
 # Call `get_balance` function and pass it your account address
 # Write the returned ether balance to the sidebar
 balance_ether = get_balance(w3 = w3, address = account.address)
@@ -177,7 +176,7 @@ st.sidebar.write(balance_ether)
 # Create a select box to chose a FinTech Hire candidate
 person = st.sidebar.selectbox("Select a Person", people)
 
-# Create a input field to record the number of hours the candidate worked
+# Create an input field to record the number of hours the candidate worked
 hours = st.sidebar.number_input("Number of Hours")
 
 st.sidebar.markdown("## Candidate Name, Hourly Rate, and Ethereum Address")
@@ -191,13 +190,13 @@ st.sidebar.write(candidate)
 # Identify the KryptoJobs2Go candidate's hourly rate
 hourly_rate = candidate_database[person][3]
 
-# Write the inTech Finder candidate's hourly rate to the sidebar
+# Write the FinTech Finder candidate's hourly rate to the sidebar
 st.sidebar.write(hourly_rate)
 
 # Identify the KryptoJobs2Go candidate's Ethereum Address
 candidate_address = candidate_database[person][1]
 
-# Write the inTech Finder candidate's Ethereum Address to the sidebar
+# Write the FinTech Finder candidate's Ethereum Address to the sidebar
 st.sidebar.write(candidate_address)
 
 # Write the KryptoJobs2Go candidate's name to the sidebar
@@ -257,15 +256,13 @@ st.sidebar.markdown("## Total Wage in Ether")
 # variable named `wage`.
 # * Write the `wage` variable to the Streamlit sidebar by using `st.sidebar.write`.
 
-# @TODO
 # Calculate total `wage` for the candidate by multiplying the candidate’s hourly
 # rate from the candidate database (`candidate_database[person][3]`) by the
 # value of the `hours` variable
-# YOUR CODE HERE
+candidate_total_wage = hourly_rate * hours
 
-# @TODO
 # Write the `wage` calculation to the Streamlit sidebar
-# YOUR CODE HERE
+st.sidebar.write(candidate_total_wage)
 
 ##########################################
 # Step 2 - Part 2:
@@ -285,14 +282,12 @@ st.sidebar.markdown("## Total Wage in Ether")
 # variable named `transaction_hash`, and have it display on the application’s
 # web interface.
 
-
 if st.sidebar.button("Send Transaction"):
 
-    # @TODO
     # Call the `send_transaction` function and pass it 3 parameters:
     # Your `account`, the `candidate_address`, and the `wage` as parameters
     # Save the returned transaction hash as a variable named `transaction_hash`
-    # YOUR CODE HERE
+    transaction_hash = send_transaction(w3 = w3, account = account, to = candidate_address, wage = candidate_total_wage) # hashed transaction
 
     # Markdown for the transaction hash
     st.sidebar.markdown("#### Validated Transaction Hash")
@@ -316,11 +311,11 @@ get_people()
 # Complete the following steps:
 
 # 1. From your terminal, navigate to the project folder that contains
-# your `.env` file and the `krypto_jobs.py` and `crypto_wallet.py` files.
+# your `.env` file and the `fintech_finder_krypto_jobs.py` and `crypto_wallet.py` files.
 # Be sure to activate your Conda `dev` environment if it is not already active.
 
 # 2. To launch the Streamlit application,
-# type `streamlit run krypto_jobs.py`.
+# type `streamlit run fintech_finder_krypto_jobs.py`.
 
 # 3. On the resulting webpage, select a candidate that you would like to hire
 # from the appropriate drop-down menu. Then, enter the number of hours that you
